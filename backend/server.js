@@ -56,18 +56,10 @@ app.use(
 );
 
 // ✅ CORS config for frontend (allow all needed methods + credentials)
-app.use(
-  cors({
-    origin: [
-  'http://localhost:5173',
-  'https://booking-system-frontend.vercel.app',
-  'https://booking-system-frontend-or5af8ay1-thansens-projects-3a3bb88f.vercel.app',
-  'https://booking-system-frontend-et948qv58-thansens-projects-3a3bb88f.vercel.app' // add this too!
-],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: 'https://booking-system-frontend-git-main-thansens-projects-3a3bb88f.vercel.app',
+  credentials: true
+}));
 
 
 
