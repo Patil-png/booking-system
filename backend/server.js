@@ -41,20 +41,20 @@ const allowedOrigins = [
   'https://booking-system-frontend.vercel.app',
   'https://booking-system-frontend-2t220sbxe-thansens-projects-3a3bb88f.vercel.app',
   'https://booking-system-frontend-9lmkjrpsp-thansens-projects-3a3bb88f.vercel.app',
+  'https://booking-system-frontend-1d2zpm1qc-thansens-projects-3a3bb88f.vercel.app'
 ];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('❌ CORS not allowed from origin: ' + origin));
-      }
-    },
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || /\.vercel\.app$/.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed from origin: ' + origin));
+    }
+  },
+  credentials: true,
+}));
+
 
 // ✅ Body parsers
 app.use(express.json());
