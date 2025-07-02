@@ -63,6 +63,10 @@ app.use(
   })
 );
 
+app.get('/', (req, res) => {
+  res.send('Backend is working ✅');
+});
+
 // ✅ Body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
