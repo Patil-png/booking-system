@@ -2,10 +2,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import cors from 'cors';
 import helmet from 'helmet';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import cors from 'cors';
 
 import bookingRoutes from './routes/bookingRoutes.js';
 import blockedDateRoutes from './routes/blockedDateRoutes.js';
@@ -29,7 +29,7 @@ const app = express();
 
 // ------------------ MIDDLEWARE ------------------
 
-// ✅ Helmet security headers (allows Razorpay, Google recaptcha, etc.)
+// ✅ Helmet for security
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -54,37 +54,30 @@ app.use(
   })
 );
 
-// ✅ CORS config for multiple Vercel frontend URLs
-const allowedOrigins = [
-  'https://booking-system-frontend-git-main-thansens-projects-3a3bb88f.vercel.app',
-  'https://booking-system-frontend.vercel.app',
-  'https://booking-system-frontend-iy850gcga-thansens-projects-3a3bb88f.vercel.app',
-];
-
+// ✅ CORS config for all Vercel preview and production frontend URLs
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+  origin: (origin, callback) => {
+    if (!origin || origin.includes('.vercel.app')) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS: ' + origin));
+      callback(new Error('CORS not allowed for origin: ' + origin));
     }
   },
   credentials: true,
 }));
 
-
 // ✅ Body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Static image serving from `/uploads`
+// ✅ Serve static files (e.g., images) from `/uploads`
 app.use('/uploads', (req, res, next) => {
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
   next();
 }, express.static(path.join(__dirname, 'uploads')));
 
-// ✅ Health check root route for Render
+// ✅ Root route - health check
 app.get('/', (req, res) => {
   res.send('✅ Backend server is running!');
 });
