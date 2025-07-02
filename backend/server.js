@@ -36,9 +36,6 @@ app.use(
 // ✅ CORS for Vercel frontends
 const allowedOrigins = [
   'https://booking-system-frontend.vercel.app',
-  'https://booking-system-frontend-2t220sbxe-thansens-projects-3a3bb88f.vercel.app',
-  'https://booking-system-frontend-9lmkjrpsp-thansens-projects-3a3bb88f.vercel.app',
-  'https://booking-system-frontend-1d2zpm1qc-thansens-projects-3a3bb88f.vercel.app',
   'https://booking-system-frontend-6ehiq44xn-thansens-projects-3a3bb88f.vercel.app'
 ];
 
