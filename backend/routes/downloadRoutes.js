@@ -1,7 +1,13 @@
-// 📁 backend/routes/downloadRoutes.js
 import express from 'express';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
 const router = express.Router();
+
+// Fix __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 router.get('/invoice/:bookingId', (req, res) => {
   const filePath = path.join(__dirname, '../invoices', `${req.params.bookingId}.pdf`);

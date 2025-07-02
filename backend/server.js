@@ -17,6 +17,8 @@ import adminAuthRoutes from './routes/adminAuthRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import galleryRoutes from './routes/galleryRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
+import downloadRoutes from './routes/downloadRoutes.js';
+
 
 // 🌍 Setup
 dotenv.config();
@@ -88,6 +90,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/gallery-images', galleryRoutes);
 app.use('/api/admin', adminAuthRoutes);
 app.use('/api/razorpay', paymentRoutes);
+app.use('/api/download', downloadRoutes);
 
 // 🛠 Serve frontend in production (optional)
 const frontendPath = path.resolve(__dirname, '../frontend/dist');
