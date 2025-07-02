@@ -38,11 +38,22 @@ const upload = multer({ storage });
 router.get("/", async (req, res) => {
   try {
     const images = await GalleryImage.find().sort({ createdAt: -1 });
-    res.json(images);
+
+    const serverBaseUrl = process.env.SERVER_BASE_URL || `${req.protocol}://${req.get("host")}`;
+
+    const updatedImages = images.map(img => ({
+      ...img.toObject(),
+      image: img.image.startsWith("http")
+        ? img.image
+        : `${serverBaseUrl}/uploads/gallery/${path.basename(img.image)}`,
+    }));
+
+    res.json(updatedImages);
   } catch (err) {
     res.status(500).json({ message: "Error fetching images", error: err.message });
   }
 });
+
 
 // ✅ Upload a new image
 router.post("/", upload.single("image"), async (req, res) => {

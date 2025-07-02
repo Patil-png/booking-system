@@ -58,19 +58,12 @@ app.use(
 // ✅ CORS config for frontend (allow all needed methods + credentials)
 app.use(
   cors({
-    origin: function (origin, callback) {
-  const allowedOrigins = [
-    'http://localhost:5173',
-    'https://booking-system-frontend.vercel.app',
-  ];
-
-  if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
-    callback(null, true);
-  } else {
-    callback(new Error('Not allowed by CORS'));
-  }
-},
-
+    origin: [
+  'http://localhost:5173',
+  'https://booking-system-frontend.vercel.app',
+  'https://booking-system-frontend-or5af8ay1-thansens-projects-3a3bb88f.vercel.app',
+  'https://booking-system-frontend-et948qv58-thansens-projects-3a3bb88f.vercel.app' // add this too!
+],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
@@ -88,8 +81,6 @@ app.use('/uploads', (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
   next();
 }, express.static(path.join(__dirname, 'uploads')));
-
-
 
 
 // ✅ Health check root route for Render
