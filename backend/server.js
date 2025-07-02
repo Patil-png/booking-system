@@ -55,16 +55,23 @@ app.use(
 );
 
 // ✅ CORS config for all Vercel preview and production frontend URLs
+const allowedOrigins = [
+  'https://booking-system-frontend-2t220sbxe-thansens-projects-3a3bb88f.vercel.app',
+  'https://booking-system-frontend-2t220sbxe-thansens-projects-3a3bb88f.vercel.app',
+  'https://booking-system-frontend.vercel.app'
+];
+
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || origin.includes('.vercel.app')) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('CORS not allowed for origin: ' + origin));
+      callback(new Error('CORS not allowed from origin: ' + origin));
     }
   },
   credentials: true,
 }));
+
 
 // ✅ Body parsers
 app.use(express.json());
