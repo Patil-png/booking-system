@@ -4,6 +4,8 @@ import path from "path";
 import fs from "fs/promises";
 import GalleryImage from "../models/GalleryImage.js";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+dotenv.config(); // Load environment variables
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,7 +49,10 @@ router.post("/", upload.single("image"), async (req, res) => {
     const { category, alt } = req.body;
     if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
-    const imageUrl = `${req.protocol}://${req.get("host")}/uploads/gallery/${req.file.filename}`;
+    // ✅ Use SERVER_BASE_URL or fallback to dynamic URL
+    const baseUrl = process.env.SERVER_BASE_URL || `${req.protocol}://${req.get("host")}`;
+    const imageUrl = `${baseUrl}/uploads/gallery/${req.file.filename}`;
+
     const newImage = new GalleryImage({ image: imageUrl, category, alt });
     await newImage.save();
     res.status(201).json(newImage);

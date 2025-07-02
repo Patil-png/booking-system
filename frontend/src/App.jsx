@@ -3,19 +3,22 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
-import Navbar from './Components/Navbar/Navbar';
-import Footer from './Components/Footer/Footer';
-import Home from './Components/Home/Home';
-import Gallery from './Components/Gallery/Gallery';
-import Seva from './Components/Seva/Seva';
-import Rooms from './Components/Rooms/Rooms';
-import Contact from './Components/Contactus/Contact';
-import NotFound from './Components/NotFound/NotFound';
+import Navbar from './components/Navbar/Navbar.jsx';
+import Footer from './components/Footer/Footer';
+import Home from './components/Home/Home';
+import Gallery from './components/Gallery/Gallery';
+import Seva from './components/Seva/Seva';
+import Rooms from './components/Rooms/Rooms';
+import Contact from './components/Contactus/Contact';
+import NotFound from './components/NotFound/NotFound';
 import BookingPage from './pages/BookingPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './admin/AdminDashboard';
 import Contacts from './admin/Contacts.jsx';
 import GalleryAdmin from './admin/GalleryAdmin';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
 
 const isAdminAuthenticated = () => {
   return !!localStorage.getItem('adminToken');

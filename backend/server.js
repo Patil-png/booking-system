@@ -58,7 +58,7 @@ app.use(
 // ✅ CORS config for frontend (allow all needed methods + credentials)
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+origin: [ 'http://localhost:5173', 'https://booking-system-frontend.vercel.app' ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
@@ -74,11 +74,12 @@ app.use(
   '/uploads',
   (req, res, next) => {
     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
     next();
   },
   express.static(path.join(__dirname, 'uploads'))
 );
+
 
 // ✅ Health check root route for Render
 app.get('/', (req, res) => {
