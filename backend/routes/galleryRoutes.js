@@ -6,14 +6,14 @@ import GalleryImage from "../models/GalleryImage.js";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 
-dotenv.config(); // Load environment variables
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
-// --------------------- STORAGE SETUP ---------------------
+// ------------------ MULTER STORAGE ------------------
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
     const uploadPath = path.join("uploads", "gallery");
@@ -32,23 +32,22 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// --------------------- ROUTES ---------------------
+// ------------------ ROUTES ------------------
 
-// ✅ Get all gallery images
+// ✅ Get all images
 router.get("/", async (req, res) => {
   try {
     const images = await GalleryImage.find().sort({ createdAt: -1 });
 
-const serverBaseUrl = process.env.SERVER_BASE_URL || `${req.protocol}://${req.get("host")}`;
+    const serverBaseUrl =
+      process.env.SERVER_BASE_URL || `${req.protocol}://${req.get("host")}`.replace('http:', 'https:');
 
-
-    const updatedImages = images.map(img => ({
-  ...img.toObject(),
-  image: img.image.startsWith("http")
-    ? img.image
-    : `${serverBaseUrl}/uploads/gallery/${path.basename(img.image)}`,
-}));
-
+    const updatedImages = images.map((img) => ({
+      ...img.toObject(),
+      image: img.image.startsWith("http")
+        ? img.image
+        : `${serverBaseUrl}/uploads/gallery/${path.basename(img.image)}`,
+    }));
 
     res.json(updatedImages);
   } catch (err) {
@@ -56,16 +55,16 @@ const serverBaseUrl = process.env.SERVER_BASE_URL || `${req.protocol}://${req.ge
   }
 });
 
-
-// ✅ Upload a new image
+// ✅ Upload new image
 router.post("/", upload.single("image"), async (req, res) => {
   try {
     const { category, alt } = req.body;
     if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
-const serverBaseUrl = process.env.SERVER_BASE_URL || `${req.protocol}://${req.get("host")}`;
-const imageUrl = `${serverBaseUrl}/uploads/gallery/${req.file.filename}`;
+    const serverBaseUrl =
+      process.env.SERVER_BASE_URL || `${req.protocol}://${req.get("host")}`.replace('http:', 'https:');
 
+    const imageUrl = `${serverBaseUrl}/uploads/gallery/${req.file.filename}`;
 
     const newImage = new GalleryImage({ image: imageUrl, category, alt });
     await newImage.save();
@@ -76,7 +75,7 @@ const imageUrl = `${serverBaseUrl}/uploads/gallery/${req.file.filename}`;
   }
 });
 
-// ✅ Delete image by ID
+// ✅ Delete image
 router.delete("/:id", async (req, res) => {
   try {
     const image = await GalleryImage.findById(req.params.id);
@@ -85,8 +84,8 @@ router.delete("/:id", async (req, res) => {
     const imagePath = path.join(__dirname, "..", "uploads", "gallery", path.basename(image.image));
 
     try {
-      await fs.access(imagePath); // check if file exists
-      await fs.unlink(imagePath); // delete the file
+      await fs.access(imagePath); // Check file
+      await fs.unlink(imagePath); // Delete file
     } catch {
       console.warn("⚠️ File already deleted or missing:", imagePath);
     }

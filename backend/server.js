@@ -1,4 +1,3 @@
-// 📁 backend/server.js
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -7,6 +6,7 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
 
+// Routes
 import bookingRoutes from './routes/bookingRoutes.js';
 import blockedDateRoutes from './routes/blockedDateRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
@@ -17,26 +17,23 @@ import contactRoutes from './routes/contactRoutes.js';
 import galleryRoutes from './routes/galleryRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 
-// Load environment variables
 dotenv.config();
 
-// ESM __dirname workaround
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Initialize Express app
 const app = express();
 
-// ------------------ MIDDLEWARE ------------------
+// ---------------- MIDDLEWARE ----------------
 
-// ✅ Security: Helmet
+// ✅ Helmet for security
 app.use(
   helmet({
-    contentSecurityPolicy: false, // Disable CSP to avoid blocking Razorpay or Google Maps etc.
+    contentSecurityPolicy: false, // Allow external scripts like Razorpay, Google Maps
   })
 );
 
-// ✅ CORS setup for specific frontend domains
+// ✅ CORS for Vercel frontends
 const allowedOrigins = [
   'https://booking-system-frontend.vercel.app',
   'https://booking-system-frontend-2t220sbxe-thansens-projects-3a3bb88f.vercel.app',
@@ -46,7 +43,7 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || /\.vercel\.app$/.test(origin)) {
+    if (!origin || allowedOrigins.includes(origin) || /\.vercel\.app$/.test(origin)) {
       callback(null, true);
     } else {
       callback(new Error('CORS not allowed from origin: ' + origin));
@@ -55,12 +52,11 @@ app.use(cors({
   credentials: true,
 }));
 
-
-// ✅ Body parsers
+// ✅ JSON body parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Serve static files from /uploads (used by Gallery, Lawn images etc.)
+// ✅ Static uploads (gallery, invoice, etc.)
 app.use(
   '/uploads',
   (req, res, next) => {
@@ -71,23 +67,25 @@ app.use(
   express.static(path.join(__dirname, 'uploads'))
 );
 
-// ✅ Health check route
+// ✅ Health check
 app.get('/', (req, res) => {
   res.send('✅ Backend server is running!');
 });
 
-// ------------------ ROUTES ------------------
+// ---------------- ROUTES ----------------
+
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/blocked-dates', blockedDateRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/options', optionRoutes);
 app.use('/api/otp', otpRoutes);
-app.use('/api', contactRoutes); // Contact form submission
-app.use('/api/gallery', galleryRoutes); // Image uploads/view
-app.use('/api/admin', adminAuthRoutes); // Admin login, etc.
-app.use('/api/razorpay', paymentRoutes); // Payments
+app.use('/api', contactRoutes);
+app.use('/api/gallery', galleryRoutes);
+app.use('/api/admin', adminAuthRoutes);
+app.use('/api/razorpay', paymentRoutes);
 
-// ------------------ DATABASE & SERVER ------------------
+// ---------------- DATABASE ----------------
+
 mongoose
   .connect(process.env.MONGO_URI || 'mongodb://localhost:27017/hotel', {
     useNewUrlParser: true,
