@@ -58,7 +58,7 @@ app.use(
 // ✅ CORS config for frontend (allow all needed methods + credentials)
 app.use(
   cors({
-origin: [ 'http://localhost:5173', 'https://booking-system-frontend.vercel.app' ],
+    origin: ['http://localhost:5173', 'https://booking-system-frontend-mu.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
@@ -81,6 +81,7 @@ app.use(
 );
 
 
+
 // ✅ Health check root route for Render
 app.get('/', (req, res) => {
   res.send('✅ Backend server is running!');
@@ -95,7 +96,7 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/options', optionRoutes);
 app.use('/api/otp', otpRoutes);
 app.use('/api', contactRoutes);
-app.use('/api/gallery-images', galleryRoutes);
+app.use('/api/gallery', galleryRoutes);
 app.use('/api/admin', adminAuthRoutes);
 app.use('/api/razorpay', paymentRoutes);
 
