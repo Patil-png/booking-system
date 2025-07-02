@@ -1,4 +1,3 @@
-
 // 📁 server.js
 import express from 'express';
 import dotenv from 'dotenv';
@@ -55,13 +54,22 @@ app.use(
   })
 );
 
-// ✅ CORS config for frontend (allow all needed methods + credentials)
+// ✅ CORS config for multiple Vercel frontend URLs
+const allowedOrigins = [
+  'https://booking-system-frontend-git-main-thansens-projects-3a3bb88f.vercel.app',
+  'https://booking-system-frontend-iy850gcga-thansens-projects-3a3bb88f.vercel.app',
+];
+
 app.use(cors({
-  origin: 'https://booking-system-frontend-git-main-thansens-projects-3a3bb88f.vercel.app',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
-
-
 
 // ✅ Body parsers
 app.use(express.json());
@@ -74,14 +82,12 @@ app.use('/uploads', (req, res, next) => {
   next();
 }, express.static(path.join(__dirname, 'uploads')));
 
-
 // ✅ Health check root route for Render
 app.get('/', (req, res) => {
   res.send('✅ Backend server is running!');
 });
 
 // ------------------ ROUTES ------------------
-
 
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/blocked-dates', blockedDateRoutes);
@@ -95,7 +101,6 @@ app.use('/api/razorpay', paymentRoutes);
 
 // ------------------ DATABASE & SERVER ------------------
 
-// 🛢 MongoDB Connection and Start Server
 mongoose
   .connect(process.env.MONGO_URI || 'mongodb://localhost:27017/hotel', {
     useNewUrlParser: true,
@@ -104,7 +109,7 @@ mongoose
   .then(() => {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
-      console.log(`🚀 Server running at http://localhost:${PORT}`);
+      console.log(`🚀 Server running at ${import.meta.env.VITE_API_BASE_URL} `);
     });
   })
   .catch((err) => {
