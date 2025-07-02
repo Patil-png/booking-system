@@ -39,14 +39,17 @@ router.get("/", async (req, res) => {
   try {
     const images = await GalleryImage.find().sort({ createdAt: -1 });
 
-    const serverBaseUrl = process.env.SERVER_BASE_URL || `${req.protocol}://${req.get("host")}`;
+const serverBaseUrl =
+  process.env.SERVER_BASE_URL ||
+  'https://booking-system-cn1y.onrender.com';
 
     const updatedImages = images.map(img => ({
-      ...img.toObject(),
-      image: img.image.startsWith("http")
-        ? img.image
-        : `${serverBaseUrl}/uploads/gallery/${path.basename(img.image)}`,
-    }));
+  ...img.toObject(),
+  image: img.image.startsWith("http")
+    ? img.image
+    : `${serverBaseUrl}/uploads/gallery/${path.basename(img.image)}`,
+}));
+
 
     res.json(updatedImages);
   } catch (err) {
@@ -61,7 +64,9 @@ router.post("/", upload.single("image"), async (req, res) => {
     const { category, alt } = req.body;
     if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
-const serverBaseUrl = process.env.SERVER_BASE_URL || `${req.protocol}://${req.get("host")}`;
+const serverBaseUrl =
+  process.env.SERVER_BASE_URL ||
+  'https://booking-system-cn1y.onrender.com';
 const imageUrl = `${serverBaseUrl}/uploads/gallery/${req.file.filename}`;
 
 
