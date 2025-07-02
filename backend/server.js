@@ -59,10 +59,10 @@ app.use(
 app.use(
   cors({
     origin: [
-      'http://localhost:5173',
-      'https://booking-system-frontend.vercel.app',
-      'https://booking-system-frontend-or5af8ay1-thansens-projects-3a3bb88f.vercel.app' // ✅ Add this
-    ],
+  'http://localhost:5173',
+  'https://booking-system-frontend.vercel.app',
+  'https://booking-system-frontend-or5af8ay1-thansens-projects-3a3bb88f.vercel.app' // ✅ must be included
+],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
