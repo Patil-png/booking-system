@@ -39,9 +39,8 @@ router.get("/", async (req, res) => {
   try {
     const images = await GalleryImage.find().sort({ createdAt: -1 });
 
-const serverBaseUrl =
-  process.env.SERVER_BASE_URL ||
-  'https://booking-system-cn1y.onrender.com';
+const serverBaseUrl = process.env.SERVER_BASE_URL || `${req.protocol}://${req.get("host")}`;
+
 
     const updatedImages = images.map(img => ({
   ...img.toObject(),
@@ -64,9 +63,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     const { category, alt } = req.body;
     if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
-const serverBaseUrl =
-  process.env.SERVER_BASE_URL ||
-  'https://booking-system-cn1y.onrender.com';
+const serverBaseUrl = process.env.SERVER_BASE_URL || `${req.protocol}://${req.get("host")}`;
 const imageUrl = `${serverBaseUrl}/uploads/gallery/${req.file.filename}`;
 
 
