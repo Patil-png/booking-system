@@ -58,11 +58,16 @@ app.use(
 // ✅ CORS config for frontend (allow all needed methods + credentials)
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'https://booking-system-frontend-mu.vercel.app'],
+    origin: [
+      'http://localhost:5173',
+      'https://booking-system-frontend.vercel.app',
+      'https://booking-system-frontend-or5af8ay1-thansens-projects-3a3bb88f.vercel.app' // ✅ Add this
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
 );
+
 
 
 // ✅ Body parsers
@@ -70,15 +75,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ Static image serving from `/uploads`
-app.use(
-  '/uploads',
-  (req, res, next) => {
-    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-    next();
-  },
-  express.static(path.join(__dirname, 'uploads'))
-);
+app.use('/uploads', (req, res, next) => {
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+  next();
+}, express.static(path.join(__dirname, 'uploads')));
+
 
 
 
