@@ -38,7 +38,8 @@ const allowedOrigins = [
   'https://booking-system-frontend.vercel.app',
   'https://booking-system-frontend-2t220sbxe-thansens-projects-3a3bb88f.vercel.app',
   'https://booking-system-frontend-9lmkjrpsp-thansens-projects-3a3bb88f.vercel.app',
-  'https://booking-system-frontend-1d2zpm1qc-thansens-projects-3a3bb88f.vercel.app'
+  'https://booking-system-frontend-1d2zpm1qc-thansens-projects-3a3bb88f.vercel.app',
+  'https://booking-system-frontend-6ehiq44xn-thansens-projects-3a3bb88f.vercel.app'
 ];
 
 app.use(cors({
@@ -86,11 +87,7 @@ app.use('/api/razorpay', paymentRoutes);
 
 // ---------------- DATABASE ----------------
 
-mongoose
-  .connect(process.env.MONGO_URI || 'mongodb://localhost:27017/hotel', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/hotel')
   .then(() => {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
