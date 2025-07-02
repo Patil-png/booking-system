@@ -31,9 +31,8 @@ const Gallery = () => {
   image: item.image?.startsWith("http")
     ? item.image
     : `${import.meta.env.VITE_API_BASE_URL}${item.image}`,
-  category: item.category || 'uncategorized',
-  alt: item.alt || 'Gallery image',
 }));
+
 
       setAllFetchedImages(processedData);
       setImages(processedData);

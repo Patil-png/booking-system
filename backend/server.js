@@ -1,4 +1,4 @@
-// 📁 server.js
+// 📁 backend/server.js
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -20,89 +20,74 @@ import paymentRoutes from './routes/paymentRoutes.js';
 // Load environment variables
 dotenv.config();
 
-// ESM path setup
+// ESM __dirname workaround
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Init app
+// Initialize Express app
 const app = express();
 
 // ------------------ MIDDLEWARE ------------------
 
-// ✅ Helmet for security
+// ✅ Security: Helmet
 app.use(
   helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: [
-          "'self'",
-          "https://checkout.razorpay.com",
-          "https://www.google.com",
-          "https://www.gstatic.com",
-        ],
-        frameSrc: [
-          "'self'",
-          "https://checkout.razorpay.com",
-          "https://www.google.com",
-          "https://www.gstatic.com",
-        ],
-        connectSrc: ["'self'", "https://api.razorpay.com"],
-        imgSrc: ["'self'", "data:", "https://www.google.com", "https://www.gstatic.com"],
-      },
-    },
+    contentSecurityPolicy: false, // Disable CSP to avoid blocking Razorpay or Google Maps etc.
   })
 );
 
-// ✅ CORS config for all Vercel preview and production frontend URLs
+// ✅ CORS setup for specific frontend domains
 const allowedOrigins = [
+  'https://booking-system-frontend.vercel.app',
   'https://booking-system-frontend-2t220sbxe-thansens-projects-3a3bb88f.vercel.app',
-  'https://booking-system-frontend-2t220sbxe-thansens-projects-3a3bb88f.vercel.app',
-  'https://booking-system-frontend.vercel.app'
+  'https://booking-system-frontend-9lmkjrpsp-thansens-projects-3a3bb88f.vercel.app',
 ];
 
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('CORS not allowed from origin: ' + origin));
-    }
-  },
-  credentials: true,
-}));
-
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('❌ CORS not allowed from origin: ' + origin));
+      }
+    },
+    credentials: true,
+  })
+);
 
 // ✅ Body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Serve static files (e.g., images) from `/uploads`
-app.use('/uploads', (req, res, next) => {
-  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-  next();
-}, express.static(path.join(__dirname, 'uploads')));
+// ✅ Serve static files from /uploads (used by Gallery, Lawn images etc.)
+app.use(
+  '/uploads',
+  (req, res, next) => {
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+    next();
+  },
+  express.static(path.join(__dirname, 'uploads'))
+);
 
-// ✅ Root route - health check
+// ✅ Health check route
 app.get('/', (req, res) => {
   res.send('✅ Backend server is running!');
 });
 
 // ------------------ ROUTES ------------------
-
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/blocked-dates', blockedDateRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/options', optionRoutes);
 app.use('/api/otp', otpRoutes);
-app.use('/api', contactRoutes);
-app.use('/api/gallery', galleryRoutes);
-app.use('/api/admin', adminAuthRoutes);
-app.use('/api/razorpay', paymentRoutes);
+app.use('/api', contactRoutes); // Contact form submission
+app.use('/api/gallery', galleryRoutes); // Image uploads/view
+app.use('/api/admin', adminAuthRoutes); // Admin login, etc.
+app.use('/api/razorpay', paymentRoutes); // Payments
 
 // ------------------ DATABASE & SERVER ------------------
-
 mongoose
   .connect(process.env.MONGO_URI || 'mongodb://localhost:27017/hotel', {
     useNewUrlParser: true,
