@@ -78,7 +78,7 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/options', optionRoutes);
 app.use('/api/otp', otpRoutes);
 app.use('/api', contactRoutes);
-app.use('/api/gallery', galleryRoutes);
+app.use('/api/gallery-images', galleryRoutes);
 app.use('/api/admin', adminAuthRoutes);
 app.use('/api/razorpay', paymentRoutes);
 
