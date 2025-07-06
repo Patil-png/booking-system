@@ -8,7 +8,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const router = express.Router({ mergeParams: true });
+const router = express.Router();
 
 // --------------------- STORAGE SETUP ---------------------
 const storage = multer.diskStorage({
@@ -47,7 +47,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     const { category, alt } = req.body;
     if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
-const imageUrl = `${process.env.SERVER_BASE_URL || `${req.protocol}://${req.get("host")}`}/uploads/gallery/${req.file.filename}`;
+    const imageUrl = `${req.protocol}://${req.get("host")}/uploads/gallery/${req.file.filename}`;
     const newImage = new GalleryImage({ image: imageUrl, category, alt });
     await newImage.save();
     res.status(201).json(newImage);

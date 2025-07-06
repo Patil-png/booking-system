@@ -1,24 +1,62 @@
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
-export const generateInvoice = async (booking) => {
-  const doc = new PDFDocument();
-  let buffers = [];
+export const generateInvoice = ({ bookingType, formData, price, paymentId }) => {
+  const doc = new jsPDF();
 
-  doc.on('data', buffers.push.bind(buffers));
-  doc.on('end', () => {});
+  doc.setFontSize(22);
+  doc.setTextColor(40, 60, 100);
+  doc.text('🏨 Booking Confirmation Invoice', 14, 20);
 
-  // PDF content
-  doc.fontSize(20).text('Booking Invoice', { align: 'center' });
-  doc.moveDown();
-  doc.fontSize(14).text(`Booking ID: ${booking._id}`);
-  doc.text(`Name: ${booking.name || booking.email}`);
-  doc.text(`Email: ${booking.email}`);
-  doc.text(`Phone: ${booking.phone}`);
-  doc.text(`Room Type: ${booking.type}`);
-  doc.text(`Check-in: ${booking.checkIn}`);
-  doc.text(`Check-out: ${booking.checkOut}`);
-  doc.text(`Amount Paid: ₹${booking.amount}`);
-  doc.end();
+  doc.setFontSize(12);
+  doc.setTextColor(100);
+  doc.text(`Generated On: ${new Date().toLocaleString()}`, 14, 28);
 
-  const pdfBuffer = await getStream.buffer(doc);
-  return pdfBuffer;
+  const stayDays =
+    formData.checkIn && formData.checkOut
+      ? Math.max(
+          1,
+          Math.ceil(
+            (new Date(formData.checkOut) - new Date(formData.checkIn)) /
+              (1000 * 60 * 60 * 24)
+          )
+        )
+      : 1;
+
+  autoTable(doc, {
+    startY: 36,
+    head: [['Field', 'Details']],
+    theme: 'striped',
+    headStyles: { fillColor: [0, 102, 204] },
+    body: [
+      ['Booking Type', bookingType],
+      ['Name', formData.email],
+      ['Phone', formData.phone],
+      ['Check-in', formData.checkIn],
+      ['Check-out', formData.checkOut],
+      ['Slot/Room', formData.slot || formData.roomId || 'N/A'],
+      ['Adults', formData.adults || '-'],
+      ['Children', formData.children || '-'],
+      ['Total Days', stayDays],
+      ['Rate per Day', `₹${(price / stayDays).toFixed(2)}`],
+      ['Amount Paid', `₹${price}`],
+      ['Payment ID', paymentId],
+    ],
+    styles: {
+      fontSize: 11,
+      textColor: 50,
+      cellPadding: 3,
+    },
+  });
+
+  doc.setTextColor(80);
+  doc.setFontSize(12);
+  doc.text(
+    '✅ Thank you for your booking. Have a pleasant stay!',
+    14,
+    doc.lastAutoTable.finalY + 12
+  );
+
+  // ✅ Return blob instead of saving directly
+  return doc.output('blob');
 };

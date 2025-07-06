@@ -5,6 +5,8 @@ import helmet from 'helmet';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
+import roomTypeRoutes from './routes/roomTypeRoutes.js';
+
 
 // Routes
 import bookingRoutes from './routes/bookingRoutes.js';
@@ -65,6 +67,9 @@ app.use(
   express.static(path.join(__dirname, 'uploads'))
 );
 
+app.use('/uploads', express.static('uploads'));
+
+
 // ✅ Health check
 app.get('/', (req, res) => {
   res.send('✅ Backend server is running!');
@@ -81,6 +86,7 @@ app.use('/api', contactRoutes);
 app.use('/api/gallery-images', galleryRoutes);
 app.use('/api/admin', adminAuthRoutes);
 app.use('/api/razorpay', paymentRoutes);
+app.use('/api/room-types', roomTypeRoutes);
 
 // ---------------- DATABASE ----------------
 
