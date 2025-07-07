@@ -1,14 +1,14 @@
+// 📁 server.js
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import helmet from 'helmet';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import cors from 'cors';
 import roomTypeRoutes from './routes/roomTypeRoutes.js';
 
 
-// Routes
 import bookingRoutes from './routes/bookingRoutes.js';
 import blockedDateRoutes from './routes/blockedDateRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
@@ -19,11 +19,14 @@ import contactRoutes from './routes/contactRoutes.js';
 import galleryRoutes from './routes/galleryRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 
+// Load environment variables
 dotenv.config();
 
+// ESM path setup
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Init app
 const app = express();
 
 // ---------------- MIDDLEWARE ----------------

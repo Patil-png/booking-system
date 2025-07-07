@@ -90,18 +90,37 @@ export const getDashboardStats = async (req, res) => {
 
 export const exportAllBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find().sort({ createdAt: -1 });
-    const fields = ['type', 'email', 'phone', 'checkIn', 'checkOut', 'amount', 'isApproved'];
-    const csv = new Parser({ fields }).parse(bookings);
+    const bookings = await Booking.find().populate('roomId').sort({ createdAt: -1 });
+
+    const formatted = bookings.map((b) => ({
+      Type: b.type,
+      RoomOrSlot: b.roomId?.name || b.slot || '',
+      Email: b.email,
+      Phone: b.phone,
+      Adults: b.adults || 0,
+      Children: b.children || 0,
+      Amount: b.amount,
+      CheckIn: b.checkIn,
+      CheckOut: b.checkOut,
+      PaymentId: b.paymentId || '-',
+      CreatedAt: new Date(b.createdAt).toLocaleString(),
+      Approved: b.isApproved ? 'Yes' : 'No',
+      Paid: b.isPaid ? 'Yes' : 'No',
+    }));
+
+    const fields = Object.keys(formatted[0]);
+    const parser = new Parser({ fields });
+    const csv = parser.parse(formatted);
 
     res.setHeader('Content-disposition', 'attachment; filename=all-bookings.csv');
     res.set('Content-Type', 'text/csv');
-    res.send(csv);
+    res.status(200).send(csv);
   } catch (err) {
     console.error('Error exporting CSV:', err);
     res.status(500).json({ error: 'Failed to export bookings' });
   }
 };
+
 
 export const saveBooking = async (req, res) => {
   try {
