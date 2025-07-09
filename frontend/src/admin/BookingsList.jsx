@@ -105,8 +105,9 @@ const BookingsList = () => {
   };
 
   const handleDownloadInvoice = (id) => {
-    window.open(${import.meta.env.VITE_API_BASE_URL}/api/bookings/invoice/${id}`, "_blank");
-  };
+  window.open(`${import.meta.env.VITE_API_BASE_URL}/api/bookings/invoice/${id}`, "_blank");
+};
+
 
   const filtered = bookings.filter((b) => {
     const q = search.toLowerCase();
@@ -252,7 +253,7 @@ const BookingsList = () => {
 
       <motion.div variants={itemVariants} className="mb-4">
         <input
-          type="text"
+          type="text"      
           placeholder="Search by email, phone, ID, type, room or slot..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
