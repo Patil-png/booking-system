@@ -10,7 +10,7 @@ export const sendApprovalEmail = async (booking) => {
     },
   });
 
-  // ✅ Better to use VITE_BASE_URL or FRONTEND_URL if set, fallback to localhost
+  // ✅ Better to use VITE_BASE_URL or FRONTEND_URL if set, fallback
 const frontendBaseUrl = process.env.FRONTEND_BASE_URL;
 const bookingLink = `${frontendBaseUrl}/room-booking?bookingId=${booking._id}`;
 
