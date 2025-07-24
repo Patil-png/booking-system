@@ -19,7 +19,6 @@ export const addBlockedDate = async (req, res) => {
 // Get all blocked dates for a type
 export const getBlockedDates = async (req, res) => {
   try {
-    console.log("GET /api/blocked-dates", req.query.type);
     const list = await BlockedDate.find({ type: req.query.type });
     res.json(list); // ✅ Make sure this sends JSON
   } catch (err) {

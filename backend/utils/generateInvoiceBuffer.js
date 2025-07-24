@@ -13,6 +13,7 @@ export const generateInvoiceBuffer = (booking) => {
     head: [['Field', 'Details']],
     body: [
       ['Booking Type', booking.type],
+      ['Room Option', booking.optionName || booking.roomOption || booking.roomName || 'N/A'],
       ['Email', booking.email],
       ['Phone', booking.phone],
       ['Check-in', booking.checkIn],

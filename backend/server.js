@@ -38,6 +38,7 @@ app.use(
   })
 );
 
+
 // ✅ CORS for Vercel frontends
 const allowedOrigins = [
   'https://booking-system-frontend.vercel.app',
