@@ -4,16 +4,16 @@ import GalleryImage from "./models/GalleryImage.js";
 
 dotenv.config();
 
-const MONGODB_URI = process.env.MONGO_URI;
+const MONGO_URI = process.env.MONGO_URI;
 
-if (!MONGODB_URI) {
-  console.error("❌ MONGODB_URI not found in .env");
+if (!MONGO_URI) {
+  console.error("❌ MONGO_URI not found in .env");
   process.exit(1);
 }
 
 const fixImageUrls = async () => {
   try {
-    await mongoose.connect(MONGODB_URI);
+    await mongoose.connect(MONGO_URI);
     console.log("✅ Connected to MongoDB");
 
     const images = await GalleryImage.find({ image: { $regex: /^http:\/\// } });
