@@ -1,6 +1,10 @@
 {
   "name": "gouri-inn",
   "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "framework": "vite",
   "builds": [
     {
       "src": "package.json",
