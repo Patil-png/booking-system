@@ -9,15 +9,15 @@ const seedAdmin = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
 
-    const existing = await Admin.findOne({ email: 'aura@example.com' });
+    const existing = await Admin.findOne({ email: 'admin@stayluxe.com' });
     if (existing) {
       console.log('⚠️ Admin already exists');
       return process.exit();
     }
 
     const newAdmin = new Admin({
-      email: 'aura@example.com',
-      password: 'aura123', // Will be hashed automatically
+      email: 'admin@stayluxe.com',
+      password: 'Admin@123', // Will be hashed automatically
       isAdmin: true,
     });
 
