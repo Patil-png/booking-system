@@ -84,9 +84,9 @@ const StatsCharts = () => {
       <div className="bg-white rounded-2xl shadow-card border border-gray-100 p-3 sm:p-6 lg:p-8 text-xs sm:text-base">
         <div className="text-center mb-4 sm:mb-8">
           <h2 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent mb-1 sm:mb-2">
-            Hotel Revenue Stats
+            Payment & Booking Stats
           </h2>
-          <p className="text-gray-600 text-xs sm:text-sm">Offline payments & direct hotel collections only</p>
+          <p className="text-gray-600 text-xs sm:text-sm">Comprehensive analytics for your business performance</p>
         </div>
 
         <div className="animate-fade-in">
@@ -96,7 +96,7 @@ const StatsCharts = () => {
             <div className="w-full lg:w-1/2 max-w-lg">
               <div className="chart-container rounded-xl shadow-lg p-3 sm:p-6 hover:shadow-xl transition-all duration-500 border border-gray-100 group text-xs sm:text-base">
                 <div className="flex items-center justify-between mb-2 sm:mb-4">
-                  <h3 className="text-xs sm:text-lg font-semibold text-gray-800">Hotel Revenue Trends</h3>
+                  <h3 className="text-xs sm:text-lg font-semibold text-gray-800">Revenue Trends</h3>
                   <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
                 </div>
                 
@@ -105,7 +105,7 @@ const StatsCharts = () => {
                     <BarChart data={barData}>
                       <XAxis dataKey="label" />
                       <YAxis />
-                      <Tooltip formatter={(value) => [`₹${value.toLocaleString()}`, 'Hotel Revenue']} />
+                      <Tooltip formatter={(value) => [`${value.toLocaleString()}`, 'Revenue']} />
                       <Bar dataKey="value" fill="url(#barGradient)" radius={[4, 4, 0, 0]} />
                       <defs>
                         <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">

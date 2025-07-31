@@ -58,48 +58,22 @@ export const getDashboardStats = async (req, res) => {
     const yearStart = new Date(today.getFullYear(), 0, 1);
 
     const todayTotal = await Booking.aggregate([
-      { 
-        $match: { 
-          createdAt: { $gte: today },
-          isApproved: true,
-          isPaid: true
-        } 
-      },
+      { $match: { createdAt: { $gte: today } } },
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
 
     const monthTotal = await Booking.aggregate([
-      { 
-        $match: { 
-          createdAt: { $gte: monthStart },
-          isApproved: true,
-          isPaid: true
-        } 
-      },
+      { $match: { createdAt: { $gte: monthStart } } },
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
 
     const yearTotal = await Booking.aggregate([
-      { 
-        $match: { 
-          createdAt: { $gte: yearStart },
-          isApproved: true,
-          isPaid: true
-        } 
-      },
+      { $match: { createdAt: { $gte: yearStart } } },
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
 
-    const roomCount = await Booking.countDocuments({ 
-      type: 'Room',
-      isApproved: true,
-      isPaid: true
-    });
-    const lawnCount = await Booking.countDocuments({ 
-      type: 'Lawn',
-      isApproved: true,
-      isPaid: true
-    });
+    const roomCount = await Booking.countDocuments({ type: 'Room' });
+    const lawnCount = await Booking.countDocuments({ type: 'Lawn' });
 
     res.json({
       todayTotal: todayTotal[0]?.total || 0,
