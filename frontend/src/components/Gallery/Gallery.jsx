@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const fallbackImage = "https://via.placeholder.com/600x400?text=Image+Not+Found";
+const fallbackImage = "/fallback.jpg";
 
 const Gallery = () => {
   const sliderRef = useRef(null);
@@ -275,14 +275,14 @@ const Gallery = () => {
       </header>
 
       <motion.nav
-        className="flex justify-center gap-3 sm:gap-6 mt-8 sm:mt-12 mb-8 sm:mb-16 flex-wrap px-4"
+        className="flex flex-nowrap justify-center gap-2 sm:gap-6 mt-8 sm:mt-12 mb-8 sm:mb-16 flex-wrap px-2"
         variants={staggerContainerVariants}
       >
         {["all", "room", "lawn"].map((tab) => (
           <motion.button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base lg:text-lg font-bold rounded-full border-2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 backdrop-blur-sm
+            className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-base lg:text-lg font-bold rounded-full border-2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50 backdrop-blur-sm whitespace-nowrap
               ${activeTab === tab
                 ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-transparent shadow-xl shadow-blue-500/25 scale-105"
                 : "text-blue-300 border-blue-400/50 bg-white/5 hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-purple-600/20 hover:text-white hover:shadow-lg hover:border-blue-300"
@@ -413,8 +413,8 @@ const Gallery = () => {
                   <img
                     src={img.image}
                     alt={img.alt || `Thumb ${idx + 1}`}
-                    className="w-full h-20 sm:h-24 lg:h-28 object-cover transition-transform duration-300 group-hover:scale-110"
                     onError={handleImageError}
+                    className="w-full h-20 sm:h-24 lg:h-28 object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   {selectedIndex === idx && (
@@ -458,8 +458,8 @@ const Gallery = () => {
               <img
                 src={images[selectedIndex].image}
                 alt={images[selectedIndex].alt || "Full Image"}
-                className="max-w-full max-h-[90vh] rounded-2xl shadow-2xl object-contain border-4 border-white/20"
                 onError={handleImageError}
+                className="max-w-full max-h-[90vh] rounded-2xl shadow-2xl object-contain border-4 border-white/20"
               />
               
               <motion.button
@@ -931,8 +931,8 @@ export default Gallery;
 //                   <img
 //                     src={img.image}
 //                     alt={img.alt || `Thumb ${idx + 1}`}
-//                     className="w-full h-20 sm:h-24 lg:h-28 object-cover transition-transform duration-300 group-hover:scale-110"
 //                     onError={handleImageError}
+//                     className="w-full h-20 sm:h-24 lg:h-28 object-cover transition-transform duration-300 group-hover:scale-110"
 //                   />
 //                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 //                   {selectedIndex === idx && (
@@ -977,8 +977,8 @@ export default Gallery;
 //               <img
 //                 src={images[selectedIndex].image}
 //                 alt={images[selectedIndex].alt || "Full Image"}
-//                 className="max-w-full max-h-[90vh] rounded-2xl shadow-2xl object-contain border-4 border-white/20"
 //                 onError={handleImageError}
+//                 className="max-w-full max-h-[90vh] rounded-2xl shadow-2xl object-contain border-4 border-white/20"
 //               />
               
 //               {/* Close button */}
