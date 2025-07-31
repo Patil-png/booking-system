@@ -57,34 +57,39 @@ export const getDashboardStats = async (req, res) => {
     const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
     const yearStart = new Date(today.getFullYear(), 0, 1);
 
-    // Only include paid bookings in the totals
+    // Only include offline payments (hotel money) - exclude online payments
     const todayTotal = await Booking.aggregate([
-      { $match: { 
-        createdAt: { $gte: today },
-        isPaid: true 
-      }},
+      { 
+        $match: { 
+          createdAt: { $gte: today },
+          paymentId: { $in: ['OFFLINE', null] } // Only offline payments or unpaid bookings
+        } 
+      },
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
 
     const monthTotal = await Booking.aggregate([
-      { $match: { 
-        createdAt: { $gte: monthStart },
-        isPaid: true 
-      }},
+      { 
+        $match: { 
+          createdAt: { $gte: monthStart },
+          paymentId: { $in: ['OFFLINE', null] } // Only offline payments or unpaid bookings
+        } 
+      },
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
 
     const yearTotal = await Booking.aggregate([
-      { $match: { 
-        createdAt: { $gte: yearStart },
-        isPaid: true 
-      }},
+      { 
+        $match: { 
+          createdAt: { $gte: yearStart },
+          paymentId: { $in: ['OFFLINE', null] } // Only offline payments or unpaid bookings
+        } 
+      },
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
 
-    // Count only paid bookings
-    const roomCount = await Booking.countDocuments({ type: 'Room', isPaid: true });
-    const lawnCount = await Booking.countDocuments({ type: 'Lawn', isPaid: true });
+    const roomCount = await Booking.countDocuments({ type: 'Room' });
+    const lawnCount = await Booking.countDocuments({ type: 'Lawn' });
 
     res.json({
       todayTotal: todayTotal[0]?.total || 0,
