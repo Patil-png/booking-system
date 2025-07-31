@@ -47,7 +47,12 @@ router.post("/", upload.single("image"), async (req, res) => {
     const { category, alt } = req.body;
     if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
-    const imageUrl = `https://${req.get("host")}/uploads/gallery/${req.file.filename}`;
+    // Use Render server URL for production
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://booking-system-cn1y.onrender.com'
+      : `https://${req.get("host")}`;
+    
+    const imageUrl = `${baseUrl}/uploads/gallery/${req.file.filename}`;
     const newImage = new GalleryImage({ image: imageUrl, category, alt });
     await newImage.save();
     res.status(201).json(newImage);
