@@ -6,9 +6,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
+
 import roomTypeRoutes from './routes/roomTypeRoutes.js';
-
-
 import bookingRoutes from './routes/bookingRoutes.js';
 import blockedDateRoutes from './routes/blockedDateRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
@@ -19,35 +18,33 @@ import contactRoutes from './routes/contactRoutes.js';
 import galleryRoutes from './routes/galleryRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 
-// Load environment variables
+// Load env variables
 dotenv.config();
 
-// ESM path setup
+// ESM path fix
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Init app
 const app = express();
 
-// ---------------- MIDDLEWARE ----------------
-
 // ✅ Helmet for security
 app.use(
   helmet({
-    contentSecurityPolicy: false, // Allow external scripts like Razorpay, Google Maps
+    contentSecurityPolicy: false, // Needed for Razorpay, Google Maps etc.
   })
 );
 
-
-// ✅ CORS for Vercel frontends
+// ✅ CORS setup for Vercel frontend
 const allowedOrigins = [
   'https://booking-system-frontend.vercel.app',
-  'https://booking-system-frontend-72sy4i2s0-thansens-projects-3a3bb88f.vercel.app'
+  'https://booking-system-frontend-72sy4i2s0-thansens-projects-3a3bb88f.vercel.app',
+  /\.vercel\.app$/
 ];
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin) || /\.vercel\.app$/.test(origin)) {
+    if (!origin || allowedOrigins.some(o => typeof o === 'string' ? o === origin : o.test(origin))) {
       callback(null, true);
     } else {
       callback(new Error('CORS not allowed from origin: ' + origin));
@@ -56,11 +53,11 @@ app.use(cors({
   credentials: true,
 }));
 
-// ✅ JSON body parsing
+// ✅ Parse incoming requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Static uploads (gallery, invoice, etc.)
+// ✅ Static uploads
 app.use(
   '/uploads',
   (req, res, next) => {
@@ -71,16 +68,17 @@ app.use(
   express.static(path.join(__dirname, 'uploads'))
 );
 
-app.use('/uploads', express.static('uploads'));
-
-
-// ✅ Health check
+// ✅ Health check (homepage)
 app.get('/', (req, res) => {
   res.send('✅ Backend server is running!');
 });
 
-// ---------------- ROUTES ----------------
+// ✅ Ping route for UptimeRobot
+app.get('/api/ping', (req, res) => {
+  res.status(200).json({ message: 'Backend is alive!' });
+});
 
+// ✅ Routes
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/blocked-dates', blockedDateRoutes);
 app.use('/api/notifications', notificationRoutes);
@@ -92,13 +90,12 @@ app.use('/api/admin', adminAuthRoutes);
 app.use('/api/razorpay', paymentRoutes);
 app.use('/api/room-types', roomTypeRoutes);
 
-// ---------------- DATABASE ----------------
-
-mongoose.connect(process.env.MONGO_URI || 'mongodb://:27017/hotel')
+// ✅ MongoDB connection + Start server
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/hotel')
   .then(() => {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
-      console.log(`🚀 Server running at http://:${PORT}`);
+      console.log(`🚀 Server running at http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
