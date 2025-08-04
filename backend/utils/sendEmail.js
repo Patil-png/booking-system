@@ -15,7 +15,7 @@ export const sendInvoiceEmail = async (booking) => {
       <div style="font-family: 'Segoe UI', sans-serif; background-color: #f4f6f8; padding: 40px;">
         <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
           <div style="background: linear-gradient(90deg, #1e40af, #059669); padding: 32px 24px; text-align: center;">
-            <img src="https://i.imgur.com/8Km9tLL.png" alt="Gouri Inn Logo" style="width: 60px; height: 60px; border-radius: 12px; margin-bottom: 10px;">
+            <img src="/favicon.png" alt="Gouri Inn Logo" style="width: 60px; height: 60px; border-radius: 12px; margin-bottom: 10px;">
             <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Gouri Inn</h1>
             <p style="color: #dbeafe; font-size: 18px; margin: 4px 0 0;">Booking Invoice</p>
           </div>
