@@ -23,12 +23,13 @@ const isAdminAuthenticated = () => {
 function AppLayout() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/executive-assistant');
+  const isBookingPage = location.pathname.startsWith('/room-booking');
 
   return (
     <>
       <Toaster position="top-right" />
       {!isAdminRoute && <Navbar />}
-      {!isAdminRoute && <Breadcrumbs />}
+      {!isAdminRoute && !isBookingPage && <Breadcrumbs />}
 
       <main className={!isAdminRoute ? "pt-[4.5rem]" : ""}>
         <Routes>
