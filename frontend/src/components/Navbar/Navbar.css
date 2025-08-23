@@ -1,0 +1,327 @@
+.navbar {
+  position: fixed;
+  top: 1.5rem; /* Space from the top */
+  right: 1.5rem; /* Space from the right */
+  z-index: 50;
+  width: calc(100% - 3rem); /* Adjust width for padding */
+  max-width: 1200px; /* Max width for larger screens */
+  left: 50%; /* Center the navbar */
+  transform: translateX(-50%); /* Center the navbar */
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between; /* Distribute items */
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 9999px; /* Re-add rounded border */
+  padding: 0.5rem 1.5rem; /* Re-add horizontal padding */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+  backdrop-filter: blur(5px); /* Frosted glass effect */
+  max-width: 1200px; /* Apply max-width to container for centering */
+  margin: 0 auto; /* Center the container */
+}
+
+.nav-logo {
+  flex-shrink: 0;
+  background-color: transparent; /* Remove background */
+  border-radius: 0; /* Remove border-radius */
+  padding: 0; /* Remove padding */
+  margin-right: 0; /* Remove margin */
+}
+
+.logo-text {
+  color: white;
+  font-family: 'Montserrat', sans-serif; /* Example font, adjust as needed */
+  font-size: 1.5rem; /* Adjust size as needed */
+  font-weight: 700; /* Bold font */
+  letter-spacing: 0.05em; /* Slightly increased letter spacing */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Changed space-x to gap for modern CSS */
+}
+
+/* Hide nav-links on small screens and show on medium screens and up */
+@media (max-width: 767px) {
+  .nav-links {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+  }
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform */
+  font-weight: 500; /* Slightly bolder */
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.15); /* Slightly more opaque hover */
+  transform: translateY(-2px); /* Lift effect */
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.contact-link {
+  color: #333; /* Darker text */
+  background-color: #fff; /* Pure white */
+  padding: 0.6rem 1.2rem; /* Slightly larger padding */
+  border-radius: 9999px;
+  text-decoration: none;
+  font-weight: bold; /* Bold text */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.contact-link:hover {
+  background-color: #f0f0f0; /* Light gray on hover */
+  transform: scale(1.05); /* Pop effect */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 0.5rem; /* Added border-radius */
+  overflow: hidden; /* Ensures content respects border-radius */
+  background: linear-gradient(to bottom right, #ffffff, #f0f0f0); /* Gradient background */
+  border: 1px solid #e0e0e0; /* Subtle border */
+}
+
+.dropdown-content a {
+  color: #333; /* Darker text for better contrast */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+}
+
+.dropdown-content a:hover {
+  background-color: #e0e0e0; /* Lighter hover background */
+  color: #000; /* Black text on hover */
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Mobile menu styles */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  background-color: #202030; /* Dark background color from image */
+  padding: 0; /* Remove padding from here, add to content */
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 0;
+  animation: slideInRight 0.4s ease-out forwards;
+  overflow-y: auto;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-item-mobile {
+  width: 100%;
+  text-align: left;
+  padding-left: 1rem; /* Adjusted padding to align left */
+  margin-bottom: 0; /* Remove vertical spacing between items, use padding on links */
+}
+
+.nav-link-mobile {
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem 1rem; /* Adjusted padding to match image */
+  display: flex; /* Use flex to align icon and text */
+  align-items: center;
+  gap: 1rem; /* Space between icon and text */
+  transition: background-color 0.3s ease;
+  font-size: 1rem; /* Adjusted font size */
+  font-weight: 400; /* Normal font weight */
+}
+
+.nav-link-mobile:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+}
+
+.contact-link-mobile {
+  color: white;
+  background-color: transparent;
+  padding: 0.75rem 1rem; /* Adjusted padding to match other links */
+  border-radius: 0;
+  text-decoration: none;
+  margin-top: 0; /* Remove margin-top, use padding/gap in content */
+  display: flex; /* Use flex to align icon and text */
+  align-items: center;
+  gap: 1rem; /* Space between icon and text */
+  font-weight: 400; /* Normal font weight */
+  font-size: 1rem; /* Adjusted font size */
+  transition: background-color 0.3s ease;
+  box-shadow: none;
+}
+
+.contact-link-mobile:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+}
+
+.dropdown-mobile {
+  position: relative;
+  width: 100%;
+}
+
+.dropbtn-mobile {
+  color: white;
+  background-color: transparent;
+  border: none;
+  padding: 0.75rem 1rem; /* Adjusted padding to match other links */
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem; /* Adjusted font size */
+  font-weight: 400; /* Normal font weight */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropbtn-mobile:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+}
+
+.dropdown-content-mobile {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  background-color: transparent;
+  min-width: 100%;
+  box-shadow: none;
+  z-index: 1;
+  border-radius: 0;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  margin-top: 0.5rem; /* Adjusted margin-top */
+  padding: 0.5rem 0; /* Adjusted padding */
+}
+
+.dropdown-content-mobile.active {
+  display: flex; /* Show when active */
+}
+
+.dropdown-content-mobile a {
+  color: white;
+  padding: 0.5rem 1rem 0.5rem 2rem; /* Adjusted padding for sub-items */
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease;
+  font-size: 0.95rem; /* Adjusted font size for sub-items */
+  font-weight: 400; /* Normal font weight */
+}
+
+.dropdown-content-mobile a:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+}
+
+.close-mobile-menu-btn {
+  position: absolute;
+  top: 1rem; /* Adjusted position */
+  right: 1rem; /* Adjusted position */
+  background-color: transparent; /* No background */
+  color: white;
+  border: none;
+  border-radius: 0; /* No border-radius */
+  width: auto; /* Auto width */
+  height: auto; /* Auto height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem; /* Larger icon */
+  cursor: pointer;
+  z-index: 60;
+  box-shadow: none; /* No shadow */
+  transition: color 0.3s ease;
+}
+
+.close-mobile-menu-btn:hover {
+  color: rgba(255, 255, 255, 0.7); /* Subtle color change on hover */
+  transform: none; /* No transform on hover */
+}
+
+.mobile-menu-content {
+  width: 100%;
+  padding-top: 0; /* Remove padding-top here */
+  padding-bottom: 1rem; /* Add padding to bottom */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* Small gap between menu items */
+}
+
+.mobile-menu-footer {
+  color: rgba(255, 255, 255, 0.5); /* Lighter color for footer */
+  font-size: 0.75rem; /* Smaller font size */
+  margin-top: auto;
+  padding: 1rem; /* Padding for footer */
+  width: 100%;
+  text-align: center; /* Center align footer text */
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+}
+
+.dropdown-arrow {
+  margin-left: auto; /* Push arrow to the right */
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transition: transform 0.3s ease;
+}
+
+.dropbtn-mobile.active .dropdown-arrow {
+  transform: rotate(-135deg);
+}
