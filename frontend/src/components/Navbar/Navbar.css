@@ -1,6 +1,6 @@
 .navbar {
   position: fixed;
-  top: 1.5rem; /* Space from the top */
+  top: 0.8rem; /* Reduced space from the top to shift it higher */
   right: 1.5rem; /* Space from the right */
   z-index: 50;
   width: calc(100% - 3rem); /* Adjust width for padding */
@@ -13,13 +13,14 @@
   display: flex;
   justify-content: space-between; /* Distribute items */
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.75); /* Slightly more opaque */
-  border-radius: 2.5rem; /* Slightly more rounded */
-  padding: 0.6rem 1.8rem; /* Increased padding for a taller look */
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3); /* More prominent shadow */
-  backdrop-filter: blur(10px); /* Increased blur for frosted effect */
+  background-color: rgba(255, 255, 255, 0.1); /* Very subtle white background */
+  border-radius: 3rem; /* More rounded, modern pill shape */
+  padding: 0.7rem 2rem; /* Increased padding for a more substantial look */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Deeper, softer shadow */
+  backdrop-filter: blur(15px); /* Stronger frosted glass effect */
   max-width: 1200px; /* Apply max-width to container for centering */
   margin: 0 auto; /* Center the container */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border */
 }
 
 .nav-logo {
@@ -61,10 +62,10 @@
 .nav-link {
   color: white;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform */
-  font-weight: 500; /* Slightly bolder */
+  padding: 0.6rem 1.2rem; /* Slightly larger padding */
+  border-radius: 2rem; /* Match navbar container border-radius */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
 }
 
 .nav-link:hover {
@@ -74,19 +75,19 @@
 
 .contact-link {
   color: #333;
-  background-color: #fff;
-  padding: 0.7rem 1.4rem;
-  border-radius: 2.5rem;
+  background-color: #ffffff; /* Pure white for contrast */
+  padding: 0.7rem 1.4rem; /* Adjusted padding to match new navbar height */
+  border-radius: 3rem; /* Match new navbar border-radius */
   text-decoration: none;
   font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Softer shadow */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* More prominent shadow */
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .contact-link:hover {
-  background-color: #e0e0e0; /* Lighter hover background */
-  transform: translateY(-1px); /* Subtle lift effect */
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
+  background-color: #f0f0f0; /* Light gray on hover */
+  transform: translateY(-3px); /* More pronounced lift effect */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
 }
 
 .dropdown {
