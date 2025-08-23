@@ -13,11 +13,11 @@
   display: flex;
   justify-content: space-between; /* Distribute items */
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 9999px; /* Re-add rounded border */
-  padding: 0.5rem 1.5rem; /* Re-add horizontal padding */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Stronger shadow */
-  backdrop-filter: blur(5px); /* Frosted glass effect */
+  background-color: rgba(0, 0, 0, 0.7); /* Slightly less opaque */
+  border-radius: 2rem; /* Less rounded, more pill-shaped */
+  padding: 0.5rem 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Softer shadow */
+  backdrop-filter: blur(8px); /* Slightly more blur for frosted effect */
   max-width: 1200px; /* Apply max-width to container for centering */
   margin: 0 auto; /* Center the container */
 }
@@ -77,20 +77,20 @@
 }
 
 .contact-link {
-  color: #333; /* Darker text */
-  background-color: #fff; /* Pure white */
-  padding: 0.6rem 1.2rem; /* Slightly larger padding */
-  border-radius: 9999px;
+  color: #333;
+  background-color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem; /* Match navbar border-radius */
   text-decoration: none;
-  font-weight: bold; /* Bold text */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow */
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Softer shadow */
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .contact-link:hover {
-  background-color: #f0f0f0; /* Light gray on hover */
-  transform: scale(1.05); /* Pop effect */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+  background-color: #f0f0f0;
+  transform: translateY(-2px); /* Lift effect */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Stronger shadow on hover */
 }
 
 .dropdown {
