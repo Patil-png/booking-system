@@ -23,21 +23,20 @@ const isAdminAuthenticated = () => {
 function AppLayout() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/executive-assistant');
-  const isBookingPage = location.pathname.startsWith('/room-booking');
 
   return (
     <>
       <Toaster position="top-right" />
       {!isAdminRoute && <Navbar />}
+      {!isAdminRoute && <Breadcrumbs />}
 
-      <main className={!isAdminRoute ? "pt-[3.5rem]" : ""}>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/Seva/:subseva" element={<Seva />} />
-          <Route path="/Rooms" element={<Rooms />} />
-          <Route path="/contact" element={<Contact />} />
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/Seva/:subseva" element={<Seva />} />
+        <Route path="/Rooms" element={<Rooms />} />
+        <Route path="/contact" element={<Contact />} />
 
         {/* Booking Routes */}
         <Route path="/book" element={<Navigate to="/room-booking" replace />} />
@@ -62,10 +61,9 @@ function AppLayout() {
           </>
         )}
 
-          {/* Fallback */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
+        {/* Fallback */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
 
       {!isAdminRoute && <Footer />}
     </>
