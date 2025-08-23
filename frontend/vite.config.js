@@ -13,7 +13,8 @@ export default defineConfig({
           router: ['react-router-dom'],
           ui: ['@headlessui/react', '@heroicons/react'],
           utils: ['axios', 'dayjs']
-        }
+        },
+        external: ['gsap']
       }
     },
     chunkSizeWarningLimit: 1000
