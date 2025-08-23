@@ -29,7 +29,6 @@ function AppLayout() {
     <>
       <Toaster position="top-right" />
       {!isAdminRoute && <Navbar />}
-      {!isAdminRoute && !isBookingPage && <Breadcrumbs />}
 
       <main className={!isAdminRoute ? "pt-[4.5rem]" : ""}>
         <Routes>
