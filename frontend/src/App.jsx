@@ -30,7 +30,7 @@ function AppLayout() {
       <Toaster position="top-right" />
       {!isAdminRoute && <Navbar />}
 
-      <main className={!isAdminRoute ? "pt-[4.5rem]" : ""}>
+      <main className={!isAdminRoute ? "pt-[3.5rem]" : ""}>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
