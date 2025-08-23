@@ -14,7 +14,7 @@ export default defineConfig({
           ui: ['@headlessui/react', '@heroicons/react'],
           utils: ['axios', 'dayjs']
         },
-        external: ['gsap']
+        external: ['gsap', 'gsap/ScrollTrigger']
       }
     },
     chunkSizeWarningLimit: 1000
