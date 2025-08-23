@@ -30,13 +30,14 @@ function AppLayout() {
       {!isAdminRoute && <Navbar />}
       {!isAdminRoute && <Breadcrumbs />}
 
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/Seva/:subseva" element={<Seva />} />
-        <Route path="/Rooms" element={<Rooms />} />
-        <Route path="/contact" element={<Contact />} />
+      <main className={!isAdminRoute ? "pt-[4.5rem]" : ""}>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/Seva/:subseva" element={<Seva />} />
+          <Route path="/Rooms" element={<Rooms />} />
+          <Route path="/contact" element={<Contact />} />
 
         {/* Booking Routes */}
         <Route path="/book" element={<Navigate to="/room-booking" replace />} />
@@ -61,9 +62,10 @@ function AppLayout() {
           </>
         )}
 
-        {/* Fallback */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* Fallback */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
 
       {!isAdminRoute && <Footer />}
     </>
