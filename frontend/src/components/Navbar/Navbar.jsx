@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar">
+    <nav className="navbar">
       <div className="navbar-container">
         <div className="nav-logo">
           <Link to="/" className="flex items-center">
@@ -124,7 +124,7 @@ const Navbar = () => {
           </div>
         </div>
       )}
-    </div>
+    </nav>
   );
 };
 
@@ -349,4 +349,4 @@ export default Navbar;
 //   );
 // };
 
-// export default Navbar; 
+// export default Navbar;
