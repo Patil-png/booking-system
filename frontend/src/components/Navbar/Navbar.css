@@ -13,11 +13,11 @@
   display: flex;
   justify-content: space-between; /* Distribute items */
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.7); /* Slightly less opaque */
-  border-radius: 2rem; /* Less rounded, more pill-shaped */
-  padding: 0.5rem 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Softer shadow */
-  backdrop-filter: blur(8px); /* Slightly more blur for frosted effect */
+  background-color: rgba(0, 0, 0, 0.75); /* Slightly more opaque */
+  border-radius: 2.5rem; /* Slightly more rounded */
+  padding: 0.6rem 1.8rem; /* Increased padding for a taller look */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3); /* More prominent shadow */
+  backdrop-filter: blur(10px); /* Increased blur for frosted effect */
   max-width: 1200px; /* Apply max-width to container for centering */
   margin: 0 auto; /* Center the container */
 }
@@ -68,19 +68,15 @@
 }
 
 .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.15); /* Slightly more opaque hover */
+  background-color: rgba(255, 255, 255, 0.2); /* More noticeable hover */
   transform: translateY(-2px); /* Lift effect */
-}
-
-.nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .contact-link {
   color: #333;
   background-color: #fff;
-  padding: 0.6rem 1.2rem;
-  border-radius: 2rem; /* Match navbar border-radius */
+  padding: 0.7rem 1.4rem;
+  border-radius: 2.5rem;
   text-decoration: none;
   font-weight: bold;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Softer shadow */
@@ -88,9 +84,9 @@
 }
 
 .contact-link:hover {
-  background-color: #f0f0f0;
-  transform: translateY(-2px); /* Lift effect */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Stronger shadow on hover */
+  background-color: #e0e0e0; /* Lighter hover background */
+  transform: translateY(-1px); /* Subtle lift effect */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
 }
 
 .dropdown {
