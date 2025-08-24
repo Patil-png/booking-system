@@ -36,11 +36,13 @@ app.use(
 );
 
 // ✅ CORS setup for Vercel frontend
-const allowedOrigins = [
+export const allowedOrigins = [
   'https://www.gouriinn.com',
   'https://gouriinn.com',
   'https://booking-system-cn1y.onrender.com',
-  /^https:\/\/booking-system-frontend(-[a-zA-Z0-9]+)?\.vercel\.app$/
+  'https://booking-system-frontend.vercel.app', // Specific Vercel deployment
+  'https://booking-system-frontend-git-main-patil-png.vercel.app', // Example for a specific branch deployment
+  'http://localhost:5173' // For local development
 ];
 
 app.use(cors({
