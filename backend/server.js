@@ -47,7 +47,7 @@ app.use(
   '/uploads',
   (req, res, next) => {
     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Explicitly allow all origins for static files
     next();
   },
   express.static(path.join(__dirname, 'uploads'))
