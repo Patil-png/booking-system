@@ -36,22 +36,7 @@ app.use(
 );
 
 // ✅ CORS setup for Vercel frontend
-const allowedOrigins = [
-  'https://booking-system-frontend.vercel.app',
-  'https://booking-system-frontend-72sy4i2s0-thansens-projects-3a3bb88f.vercel.app',
-  /\.vercel\.app$/
-];
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.some(o => typeof o === 'string' ? o === origin : o.test(origin))) {
-      callback(null, true);
-    } else {
-      callback(new Error('CORS not allowed from origin: ' + origin));
-    }
-  },
-  credentials: true,
-}));
+app.use(cors()); // Temporarily allow all origins for debugging
 
 // ✅ Parse incoming requests
 app.use(express.json());
