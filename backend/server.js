@@ -36,7 +36,33 @@ app.use(
 );
 
 // ✅ CORS setup for Vercel frontend
-app.use(cors()); // Temporarily allow all origins for debugging
+const allowedOrigins = [
+  'https://www.gouriinn.com',
+  'https://gouriinn.com',
+  'https://booking-system-cn1y.onrender.com',
+  /^https:\/\/booking-system-frontend(-[a-zA-Z0-9]+)?\.vercel\.app$/
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    console.log('Incoming origin:', origin); // Log the incoming origin
+    const isAllowed = !origin || allowedOrigins.some(o => {
+      if (typeof o === 'string') {
+        return o === origin;
+      } else if (o instanceof RegExp) {
+        return o.test(origin);
+      }
+      return false;
+    });
+
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed from origin: ' + origin));
+    }
+  },
+  credentials: true,
+}));
 
 // ✅ Parse incoming requests
 app.use(express.json());
