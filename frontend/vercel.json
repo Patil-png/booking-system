@@ -53,6 +53,11 @@
       "source": "/home",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "destination": "https://gouriinn.com/$1",
+      "permanent": true
     }
   ]
 }

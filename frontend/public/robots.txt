@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://gouri-inn.vercel.app/sitemap.xml
+Sitemap: https://gouriinn.com/sitemap.xml
 
 # Disallow admin areas
 Disallow: /admin/
