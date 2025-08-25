@@ -21,6 +21,7 @@ const isAdminAuthenticated = () => {
 
 function AppLayout() {
   const location = useLocation();
+  // This is a non-visible change to trigger a new deployment.
   const isAdminRoute = location.pathname.startsWith('/executive-assistant');
 
   return (
